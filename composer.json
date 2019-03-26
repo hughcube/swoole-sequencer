@@ -1,0 +1,28 @@
+{
+  "name": "hughcube/swoole-sequencer",
+  "description": "基于swoole的发号器",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "hugh.li",
+      "email": "hugh.li@foxmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-swoole": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "HughCube\\SwooleSequencer\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HughCube\\SwooleSequencer\\Tests\\": "tests"
+    }
+  }
+}
