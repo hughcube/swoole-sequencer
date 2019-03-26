@@ -10,7 +10,7 @@ dist: trusty
 sudo: false
 
 before_script:
-- pecl install swoole
+- printf 'yes\nno\nyes\nno\nno\nno\nno\n' | pecl install swoole
 - composer install --prefer-dist
 
 script: vendor/bin/phpunit --verbose

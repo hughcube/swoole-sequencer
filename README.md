@@ -1,6 +1,6 @@
 <h1 align="center"> swoole-sequencer </h1>
 
-<p align="center"> id生成.</p>
+swoole-sequencer [![Build Status](https://travis-ci.com/hughcube/swoole-sequencer.svg?branch=master)](https://travis-ci.com/hughcube/swoole-sequencer)
 
 
 ## Installing
