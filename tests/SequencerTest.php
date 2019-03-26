@@ -10,7 +10,7 @@ class SequencerTest extends TestCase
     /**
      * @return Sequencer
      */
-    public function testInstance()
+    public function getInstance()
     {
         return new Sequencer();
     }
@@ -18,7 +18,7 @@ class SequencerTest extends TestCase
     /**
      * @param Sequencer $sequencer
      * @return Sequencer
-     * @depends testInstance
+     * @depends getInstance
      */
     public function testGetId(Sequencer $sequencer)
     {
