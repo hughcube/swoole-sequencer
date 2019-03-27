@@ -33,14 +33,44 @@ class Sequencer
     protected $maxSequence;
 
     /**
+     * @var integer 二进制WorkId最大长度
+     */
+    protected $binWorkIdMaxLength;
+
+    /**
+     * @var integer 二进制Sequence最大长度
+     */
+    protected $binSequenceMaxLength;
+
+    /**
      * Server constructor
      */
-    public function __construct($workId = 0, $maxSequence = 2097151)
+    public function __construct($workId = 0, $maxSequence = 1048575, $maxWorkId = 1023)
     {
-        $this->binWorkId = $this->baseConvert($workId, 10, 2);
-        $this->binWorkId = str_pad($this->binWorkId, 10, '0', STR_PAD_LEFT);
+        if ($workId > $maxWorkId){
+            throw new \Exception("workId的范围在0-{$maxWorkId}, 当前值{$workId}");
+        }
 
+        /**
+         * 一秒最大发号数
+         */
         $this->maxSequence = $maxSequence;
+
+        /**
+         * 二进制WorkId最大长度
+         */
+        $this->binWorkIdMaxLength = strlen($this->baseConvert($maxWorkId, 10, 2));
+
+        /**
+         * 二进制Sequence最大长度
+         */
+        $this->binSequenceMaxLength = strlen($this->baseConvert($this->maxSequence, 10, 2));
+
+        /**
+         * 生成二进制的WorkId
+         */
+        $this->binWorkId = $this->baseConvert($workId, 10, 2);
+        $this->binWorkId = str_pad($this->binWorkId, $this->binWorkIdMaxLength, '0', STR_PAD_LEFT);
 
         $this->sequencer = new Atomic(0);
         $this->lastTimestamp = new Atomic(0);
@@ -75,10 +105,11 @@ class Sequencer
 
         Reset:
 
+        $timestamp = time();
+
         /**
          * 如果不是当前秒, 重制发号器
          */
-        $timestamp = time();
         if ($timestamp != $this->lastTimestamp->get()){
             $this->lastTimestamp->set($timestamp);
             $this->sequencer->set(-1);
@@ -103,15 +134,15 @@ class Sequencer
         $binTimestamp = $this->baseConvert(((string)($timestamp - 1546272000)), 10, 2);
 
         /**
-         * WorkId 1 - 1024 10位
+         * WorkId
          */
         $binWorkId = $this->binWorkId;
 
         /**
-         * 顺序号 1 - 131071    17位
+         * 顺序号
          */
         $binSequence = $this->baseConvert(((string)$sequence), 10, 2);
-        $binSequence = str_pad($binSequence, 17, '0', STR_PAD_LEFT);
+        $binSequence = str_pad($binSequence, $this->binSequenceMaxLength, '0', STR_PAD_LEFT);
 
         /**
          * 拼接

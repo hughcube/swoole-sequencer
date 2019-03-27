@@ -10,20 +10,33 @@ class SequencerTest extends TestCase
     /**
      * @return Sequencer
      */
-    public function getInstance()
+    public function testInstance()
     {
-        return new Sequencer();
+        $sequencer = new Sequencer();
+
+        $this->assertInstanceOf(Sequencer::class, $sequencer);
+
+        return $sequencer;
     }
 
     /**
      * @param Sequencer $sequencer
      * @return Sequencer
-     * @depends getInstance
+     * @depends testInstance
      */
     public function testGetId(Sequencer $sequencer)
     {
-        $id = $sequencer->getId();
+        $lastId = 0;
+        for($i = 1; $i <= 100000; $i++){
 
-        $this->assertGreaterThan(0, $id);
+            if (0 === $i % 10000){
+                sleep(1);
+            }
+
+            $id = $sequencer->getId();
+            $this->assertGreaterThan($lastId, $id);
+
+            $lastId = $id;
+        }
     }
 }
