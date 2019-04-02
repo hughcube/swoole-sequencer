@@ -1,6 +1,6 @@
 <h1 align="center"> swoole-sequencer </h1>
 
-swoole-sequencer [![Build Status](https://travis-ci.com/hughcube/swoole-sequencer.svg?branch=master)](https://travis-ci.com/hughcube/swoole-sequencer)
+swoole-sequencer [![Build Status](https://travis-ci.com/hughcube/swoole-sequencer.svg?branch=1.0)](https://travis-ci.com/hughcube/swoole-sequencer)
 
 
 ## Installing
